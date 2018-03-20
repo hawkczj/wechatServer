@@ -1,6 +1,6 @@
 import { Articles } from './../model/NewsMessage';
 import { Wechat } from './../wechat/wechat';
-import { ApiUrl, AlertModule } from './../wechat/config';
+import { apiUrl, alertModule } from './../wechat/config';
 import * as express from 'express';
 import { Request } from '../lib/request';
 
@@ -14,7 +14,7 @@ router.get('/',async (req,res)=>{
     //文本信息
     let name ='FE717';
     let result = await Wechat.sendTextMessage('FE717',`Dear ${name},
-    签核中心有两笔单据待您签核，请点击<a href=\"http://oaweb.mic.com.tw/gsc/mobile/">这里</a>进入签核系统，谢谢`);
+    签核中心有两笔单据待您签核，请点击<a href=\"http://oaweb.mic.com.tw/gsc/mobile/">这里</a>进入签核系统，谢谢(测试)`);
 
     // 图文信息
     // let news:Articles[]=[{
@@ -23,7 +23,7 @@ router.get('/',async (req,res)=>{
     //     url : "http://mp.weixin.qq.com/s/NnNBZrW_06FpE7_CG0zJLg",
     //     picurl : "http://res.mail.qq.com/node/ww/wwopenmng/images/independent/doc/test_pic_msg1.png",
     // }];
-    // let result =await Wechat.sendNewsMessage('FE717',news);
+    // let result =await Wechat.sendNewsMessage('ErXiong',news);
     res.send(result);
 });
 

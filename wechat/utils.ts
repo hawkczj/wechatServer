@@ -1,4 +1,4 @@
-import { ApiUrl, AlertModule } from './config';
+import { apiUrl, alertModule } from './config';
 import { Request } from '../lib/request';
 import * as fs from 'fs';
 
@@ -19,7 +19,7 @@ export class Util {
     public static async saveToken() {
         let token: Token;
         try {
-            let data: Token = await Request.get(ApiUrl.getToken + `?corpid=${AlertModule.corpid}&corpsecret=${AlertModule.corpsecret}`);
+            let data: Token = await Request.get(apiUrl.getToken + `?corpid=${alertModule.corpid}&corpsecret=${alertModule.corpsecret}`);
             data.expires_time = new Date().getTime() + data.expires_in * 1000;
             token = data;
             fs.writeFileSync(__dirname + '/token.txt', JSON.stringify(token));
