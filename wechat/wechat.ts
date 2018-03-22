@@ -43,7 +43,7 @@ export class Wechat {
 
     // 获取部门列表
     public static async getDepartmentList(id?: number) {
-        let token = await Util.getToken();
+        let token = await Util.getToken('contact');
         let url: string;
         if (id) {
             url = apiUrl.getDepartmentList + `?access_token=${token}&id=${id}`;
@@ -55,7 +55,7 @@ export class Wechat {
 
     // 新增部门
     public static async addDepartment(name: string, parentid: number, order?: number, id?: number) {
-        let token = await Util.getToken();
+        let token = await Util.getToken('contact');
         let body: AddDepartmentApi = {
             name: name,
             parentid: parentid,
@@ -67,7 +67,7 @@ export class Wechat {
 
     // 修改部门
     public static async UpdateDepartment(id: number, name?: string, parentid?: number, order?: number) {
-        let token = await Util.getToken();
+        let token = await Util.getToken('contact');
         let body: UpdateDepartmentApi = {
             name: name,
             parentid: parentid,
@@ -79,7 +79,7 @@ export class Wechat {
 
     // 删除部门（注：不能删除根部门；不能删除含有子部门、成员的部门）
     public static async deleteDepartment(id?: number) {
-        let token = await Util.getToken();
+        let token = await Util.getToken('contact');
         let url: string;
         if (id) {
             url = apiUrl.deleteDepartment + `?access_token=${token}&id=${id}`;
@@ -88,6 +88,45 @@ export class Wechat {
         }
         return Request.get(url);
     }
+
+    // 添加成员
+    public static async addPerson(person:AddPersonApi){
+        let token = await Util.getToken('contact');
+        let body: AddPersonApi = person;
+        return Request.post(apiUrl.addPerson + `?access_token=${token}`, body);
+    }
+
+    // 删除成员
+    public static async deletePerson(empno:string) {
+        let token = await Util.getToken('contact');
+        let url: string=apiUrl.deletePerson + `?access_token=${token}&userid=${empno}`;
+        return Request.get(url);
+    }
+
+    // 获取成员信息
+    public static async getPerson(empno:string) {
+        let token = await Util.getToken('contact');
+        let url: string=apiUrl.getPerson + `?access_token=${token}&userid=${empno}`;
+        return Request.get(url);
+    }
+}
+
+export interface AddPersonApi{
+    userid: string;
+    name: string;
+    english_name?: string;
+    mobile?: string;
+    department: number[];
+    order?:number[];
+    position?: string;
+    gender?: number;
+    email?: string;
+    isleader?: number;
+    enable?:number;
+    avatar_mediaid?: string;
+    telephone?: string;
+    extattr?: any;
+    to_invite?: boolean;
 }
 
 interface AddDepartmentApi {
